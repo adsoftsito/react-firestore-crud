@@ -1,4 +1,5 @@
 # Getting Started with Create React App
+#     "firebase": "^8.3.1",
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
