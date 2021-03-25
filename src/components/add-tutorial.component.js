@@ -1,13 +1,21 @@
 import React, { Component } from "react";
+//import {useState} from 'react'
+import { storage } from "../firebase";
+
 import TutorialDataService from "../services/tutorial.service";
 
+  
 export default class AddTutorial extends Component {
+
   constructor(props) {
     super(props);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.saveTutorial = this.saveTutorial.bind(this);
     this.newTutorial = this.newTutorial.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
+
 
     this.state = {
       title: "",
@@ -15,7 +23,11 @@ export default class AddTutorial extends Component {
       published: false,
 
       submitted: false,
+      name: "",
+      url: ""
+
     };
+    
   }
 
   /* storage */
@@ -62,7 +74,43 @@ export default class AddTutorial extends Component {
     });
   }
 
+  handleChange(e) {
+    alert("e: " + e);
+    this.setState({
+        name: e.target.files[0]
+      });
+  }
+
+  handleUpload(e) {
+    let myname = this.state.name;
+    alert("uploading..." + myname);
+    e.preventDefault();
+    const uploadTask = storage.ref(`/images/${this.state.name}`).put(this.state.name);
+    uploadTask.on("state_changed", console.log, console.error, () => {
+      storage
+        .ref("images")
+        .child(this.state.name)
+        .getDownloadURL()
+        .then((url) => {
+          //this.setFile(null);
+          //this.setURL(url);
+        });
+    });
+  }
+
+  
   render() {
+//    function App() {
+
+    //const allInputs = {imgUrl: ''}
+    //const [imageAsFile, setImageAsFile] = useState('')
+    //const [imageAsUrl, setImageAsUrl] = useState(allInputs)
+ 
+  
+   
+
+
+   // }
     return (
 
         
@@ -107,6 +155,17 @@ export default class AddTutorial extends Component {
             </button>
           </div>
         )}
+     
+     <div className="App">
+
+      <form onSubmit={this.handleUpload}>
+        <input type="file" onChange={this.handleChange} />
+        <button >upload to firebase</button>
+      </form>
+      {this.state.url}
+      <img src={this.state.url} alt="" />
+    </div>
+     
       </div>
     );
   }
