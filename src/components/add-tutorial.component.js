@@ -23,6 +23,7 @@ export default class AddTutorial extends Component {
       published: false,
 
       submitted: false,
+      file: "",
       name: "",
       url: ""
 
@@ -75,9 +76,12 @@ export default class AddTutorial extends Component {
   }
 
   handleChange(e) {
-    alert("e: " + e);
+    alert("e: " + e.target.files[0]);
+    alert("e: " + e.target.files[0].name);
+
     this.setState({
-        name: e.target.files[0]
+        file: e.target.files[0],
+        name: e.target.files[0].name
       });
   }
 
@@ -85,7 +89,7 @@ export default class AddTutorial extends Component {
     let myname = this.state.name;
     alert("uploading..." + myname);
     e.preventDefault();
-    const uploadTask = storage.ref(`/images/${this.state.name}`).put(this.state.name);
+    const uploadTask = storage.ref(`/images/${this.state.name}`).put(this.state.file);
     uploadTask.on("state_changed", console.log, console.error, () => {
       storage
         .ref("images")
