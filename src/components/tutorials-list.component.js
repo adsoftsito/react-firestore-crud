@@ -38,6 +38,7 @@ export default class TutorialsList extends Component {
         title: data.title,
         description: data.description,
         published: data.published,
+        fileurl: data.fileurl
       });
     });
 

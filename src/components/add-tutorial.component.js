@@ -25,7 +25,7 @@ export default class AddTutorial extends Component {
       submitted: false,
       file: "",
       name: "",
-      url: ""
+      fileurl: ""
 
     };
     
@@ -50,7 +50,8 @@ export default class AddTutorial extends Component {
     let data = {
       title: this.state.title,
       description: this.state.description,
-      published: false
+      published: false,
+      fileurl: this.state.fileurl
     };
 
     TutorialDataService.create(data)
@@ -97,7 +98,7 @@ export default class AddTutorial extends Component {
         .getDownloadURL()
         .then((url) => {
           //this.setFile(null);
-          //this.setURL(url);
+          this.setState({fileurl: url});
         });
     });
   }
@@ -166,8 +167,8 @@ export default class AddTutorial extends Component {
         <input type="file" onChange={this.handleChange} />
         <button >upload to firebase</button>
       </form>
-      {this.state.url}
-      <img src={this.state.url} alt="" />
+      {this.state.fileurl}
+      <img src={this.state.fileurl} alt="" />
     </div>
      
       </div>

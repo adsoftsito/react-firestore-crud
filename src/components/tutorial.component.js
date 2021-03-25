@@ -16,6 +16,7 @@ export default class Tutorial extends Component {
         title: "",
         description: "",
         published: false,
+        fileurl: ""
       },
       message: "",
     };
@@ -138,6 +139,11 @@ export default class Tutorial extends Component {
                 />
               </div>
 
+              <div className="form-group">
+                <label>Foto:</label>
+                {currentTutorial.fileurl}
+                <img src={currentTutorial.fileurl} alt="" />
+              </div>
               <div className="form-group">
                 <label>
                   <strong>Status:</strong>
